@@ -10,7 +10,7 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-  const { signIn } = useAuth();
+  const { signIn, signInDemo } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -96,15 +96,37 @@ export function Login() {
           </div>
         </div>
 
+        {/* Demo access */}
+        <div className="mt-4 bg-white rounded-lg border border-[#E8E5E0] p-5">
+          <p className="text-xs font-semibold text-[#6B6B6B] uppercase tracking-wider mb-3">
+            Acceso demo — sin contraseña
+          </p>
+          <div className="flex flex-col gap-2">
+            {[
+              { email: 'comprador@revibe.co', label: 'Entrar como Comprador', role: 'Comprador', redirect: '/' },
+              { email: 'vendedor@revibe.co', label: 'Entrar como Vendedor', role: 'Vendedor', redirect: '/vendedor' },
+              { email: 'admin@revibe.co', label: 'Entrar como Admin', role: 'Admin', redirect: '/admin' },
+            ].map(({ email, label, redirect }) => (
+              <button
+                key={email}
+                onClick={() => {
+                  signInDemo(email);
+                  toast('Bienvenido al modo demo', 'success');
+                  navigate(redirect);
+                }}
+                className="w-full text-left px-4 py-2.5 rounded border border-[#E8E5E0] bg-[#F5F3F0] hover:bg-[#C8B89A]/20 hover:border-[#C8B89A] transition-all text-sm text-[#1A1A1A] font-medium"
+              >
+                {label}
+                <span className="ml-2 text-xs text-[#6B6B6B] font-normal">{email}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <p className="text-center text-xs text-[#6B6B6B] mt-4">
           Al ingresar, aceptas nuestros{' '}
-          <a href="#" className="underline">
-            Términos de uso
-          </a>{' '}
-          y{' '}
-          <a href="#" className="underline">
-            Política de privacidad
-          </a>
+          <a href="#" className="underline">Términos de uso</a>{' '}y{' '}
+          <a href="#" className="underline">Política de privacidad</a>
         </p>
       </div>
     </div>
