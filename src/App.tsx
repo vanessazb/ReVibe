@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { InventoryProvider } from './context/InventoryContext';
 import { ToastProvider } from './components/ui/Toast';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -174,9 +175,11 @@ export default function App() {
     <BrowserRouter>
       <ToastProvider>
         <AuthProvider>
-          <CartProvider>
-            <AppRoutes />
-          </CartProvider>
+          <InventoryProvider>
+            <CartProvider>
+              <AppRoutes />
+            </CartProvider>
+          </InventoryProvider>
         </AuthProvider>
       </ToastProvider>
     </BrowserRouter>
